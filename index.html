@@ -175,20 +175,13 @@ drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('over'
 fileIn.addEventListener('change',e=>go(e.target.files[0]));
 
 function go(file){
-  if(!file)return;
+  if(!file){alert('No file selected');return;}
+  alert('File selected: '+file.name+' type:'+file.type+' size:'+file.size);
   const r=new FileReader();
+  r.onerror=e=>alert('FileReader error: '+e);
   r.onload=e=>{
     const src=e.target.result,b64=src.split(',')[1],mime=file.type||'image/jpeg';
-    document.getElementById('preview').src=src;
-    document.getElementById('preview').style.display='block';
-    document.getElementById('upIcon').style.display='none';
-    document.getElementById('upTitle').style.display='none';
-    document.getElementById('upSub').style.display='none';
-    document.getElementById('card').classList.add('show');
-    clearForm();readReceipt(b64,mime);
-  };
-  r.readAsDataURL(file);
-}
+    alert('Image loaded, b64 length:'+b64.length+' mime:'+mime);
 
 function setBadge(cls,html){document.getElementById('badge').innerHTML=`<span class="badge ${cls}">${html}</span>`}
 
