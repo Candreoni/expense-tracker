@@ -207,7 +207,10 @@ async function readReceipt(b64,mime){
         messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:mime,data:b64}},{type:'text',text:'Extract expense details from this receipt.'}]}]})
     });
     const d=await res.json();
+    if(d.error){setBadge('err','✕ API Error: '+d.error.message);document.getElementById('addBtn').disabled=false;return;}
     const raw=(d.content?.find(b=>b.type==='text')?.text||'').replace(/```json|```/g,'').trim();
+    if(!raw){setBadge('err','✕ Empty response from API');document.getElementById('addBtn').disabled=false;return;}
+    const j=JSON.parse(raw);
     const j=JSON.parse(raw);
     if(j.merchant)document.getElementById('merchant').value=j.merchant;
     if(j.date)document.getElementById('date').value=j.date;
