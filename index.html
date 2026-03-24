@@ -202,7 +202,7 @@ async function readReceipt(b64,mime){
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1024,
         system:'Extract expense data from receipt images. Reply ONLY with valid JSON, no markdown. Format: {"merchant":"","date":"MM/DD","amount":"","category":"","description":""}. Category must be exactly one of: Food, Groceries, Gas, Transportation, Parking, Household, Maintenance, Medical, Personal Care, Childcare, Office Supplies, Shipping, Tech / Electronics, Entertainment, Travel, Clothing, Other. Amount is a plain number no $ or commas.',
         messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:mime,data:b64}},{type:'text',text:'Extract expense details from this receipt.'}]}]})
     });
