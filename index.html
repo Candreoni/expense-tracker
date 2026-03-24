@@ -211,7 +211,7 @@ async function readReceipt(b64,mime){
     if(j.category){const sel=document.getElementById('category');for(let i=0;i<sel.options.length;i++){if(sel.options[i].value===j.category){sel.selectedIndex=i;break;}}}
     if(j.description)document.getElementById('description').value=j.description;
     setBadge('done','✓ Review and confirm');
-  }catch(e){setBadge('err','✕ Could not read — fill in manually');}
+  }catch(e){setBadge('err','✕ Error: '+e.message);}
   document.getElementById('addBtn').disabled=false;
   document.getElementById('card').scrollIntoView({behavior:'smooth',block:'start'});
 }
